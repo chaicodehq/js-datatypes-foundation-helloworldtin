@@ -1,3 +1,5 @@
+import { sortByPrice } from "./06-kiryana-store";
+
 /**
  * 🍃 Paan Shop Menu - Object Transform
  *
@@ -46,17 +48,38 @@
  *   updatePrices({meetha:30, saada:20}, 10)              // => {meetha:40, saada:30}
  */
 export function createPaanOrder(basePaan, customizations) {
-  // Your code here
+  if (basePaan === null || typeof basePaan !== "object") return {};
+  if (typeof customizations !== "object") return Object.assign({}, basePaan);
+
+  const order = Object.assign({}, basePaan, customizations);
+  return order;
 }
 
 export function freezeMenu(menu) {
-  // Your code here
+  if (menu === null || typeof menu !== "object") return {};
+
+  Object.freeze(menu);
+  return menu;
 }
 
 export function updatePrices(menu, increase) {
-  // Your code here
+  if (typeof menu !== "object" || menu === null || typeof increase !== "number")
+    return {};
+
+  const entries = Object.entries(menu);
+  entries.forEach((item) => {
+    item[1] = item[1] + increase;
+  });
+  const newObject = Object.fromEntries(entries);
+  return newObject;
 }
 
 export function mergeDailySpecials(regularMenu, specialsMenu) {
-  // Your code here
+  if (typeof regularMenu !== "object" && typeof specialsMenu !== "object")
+    return {};
+  if (typeof regularMenu !== "object") regularMenu = {};
+  if (typeof specialsMenu !== "object") specialsMenu = {};
+
+  const merged = { ...regularMenu, ...specialsMenu };
+  return merged;
 }
